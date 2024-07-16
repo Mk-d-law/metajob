@@ -87,11 +87,3 @@ To validate the XML file generated against the Meta Jobs schema, follow these st
       ```
     - Otherwise, you will see validation errors with line numbers.
 
-## Additional Notes
-
-- Ensure your XML feed follows the structure expected by Meta Jobs.
-- Always validate your XML against the schema before integration to avoid any issues.
-
-## License
-
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
