@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  XSL Schema for Jobs on Facebook XML Feed
+  Note that the crawler is more permissive than this schema.
+  Version: 2020-10-30
+-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0.1">
+  <!-- Data types -->
+  <xs:simpleType name="string1000">
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="1000"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="descriptionString">
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="50000"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="urlString">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="(https?://)[-\w.]+(:\d{2,5})?(/([\w/_\-.%=\?!#&amp;]*)?)?"/>
+      <xs:whiteSpace value="collapse"/>
+      <xs:maxLength value="1000"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="urlStringOrEmpty">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="\s*|(https?://)[-\w.]+(:\d{2,5})?(/([\w/_\-.%=\?!#&amp;]*)?)?"/>
+      <xs:whiteSpace value="collapse"/>
+      <xs:maxLength value="1000"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="rfc3339dateTime">
+    <xs:restriction base="xs:string">
+      <!-- RFC2822 -->
+      <!--
+       <xs:pattern value="[(?:(Sun|Mon|Tue|Wed|Thu|Fri|Sat),\s+)?(0[1-9]|[1-2]?[0-9]|3[01])\s+(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\s+(19[0-9][0-9]|[2-9][0-9][0-9][0-9])\s+(2[0-3]|[0-1][0-9]):([0-5][0-9])(?::(60|[0-5][0-9]))?\s+([-\+][0-9][0-9][0-5][0-9]|(?:UT|GMT|(?:E|C|M|P)(?:ST|DT)|[A-IK-Z]))(\s+|\(([^\(\)]+|\\\(|\\\))*\))*" /> -->
+      <!-- ISO 8601 -->
+      <!--
+      <xs:pattern value="[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9] [0-9][0-9]:[0-9][0-9]:[0-9][0-9] \+[0-9][0-9][0-9][0-9]" /> -->
+      <xs:maxLength value="1000"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="positiveDecimal">
+    <xs:union>
+      <!-- Decimal with up to 2 decimals -->
+      <xs:simpleType>
+        <xs:restriction base="xs:decimal">
+          <xs:minExclusive value="0"/>
+          <xs:fractionDigits value="2"/>
+          <xs:whiteSpace value="collapse"/>
+        </xs:restriction>
+      </xs:simpleType>
+      <!-- Also alow to be blank -->
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:length value="0"/>
+          <xs:whiteSpace value="collapse"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:union>
+  </xs:simpleType>
+  <xs:simpleType name="boolean">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="true"/>
+      <xs:enumeration value="false"/>
+      <xs:enumeration value="TRUE"/>
+      <xs:enumeration value="FALSE"/>
+      <xs:whiteSpace value="collapse"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <!-- Tags -->
+  <xs:element name="source">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="publisher-name" type="string1000"/>
+        <xs:element name="publisher-url" type="urlString"/>
+        <xs:element name="last-build-date" type="rfc3339dateTime" minOccurs="0" maxOccurs="1"/>
+        <!-- Job tag. Max of 30K. -->
+        <xs:element name="job" minOccurs="0" maxOccurs="30000">
+          <xs:complexType>
+            <xs:all>
+              <!-- Basic job info -->
+              <xs:element name="title" type="string1000"/>
+              <xs:element name="date" type="rfc3339dateTime"/>
+              <xs:element name="id" type="string1000"/>
+              <xs:element name="photo-url" type="urlStringOrEmpty" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="description" type="descriptionString"/>
+              <xs:element name="job-type" minOccurs="0" maxOccurs="1">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:whiteSpace value="collapse"/>
+                    <xs:enumeration value=""/>
+                    <xs:enumeration value="full_time"/>
+                    <xs:enumeration value="part_time"/>
+                    <xs:enumeration value="contract"/>
+                    <xs:enumeration value="internship"/>
+                    <xs:enumeration value="volunteer"/>
+                    <xs:enumeration value="FULL_TIME"/>
+                    <xs:enumeration value="PART_TIME"/>
+                    <xs:enumeration value="CONTRACT"/>
+                    <xs:enumeration value="INTERNSHIP"/>
+                    <xs:enumeration value="VOLUNTEER"/>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="remote-type" minOccurs="0" maxOccurs="1">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:whiteSpace value="collapse"/>
+                    <xs:enumeration value="fully_remote"/>
+                    <xs:enumeration value="temporarily_remote"/>
+                    <xs:enumeration value="wfh_flexible"/>
+                    <xs:enumeration value="FULLY_REMOTE"/>
+                    <xs:enumeration value="TEMPORARILY_REMOTE"/>
+                    <xs:enumeration value="WFH_FLEXIBLE"/>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <!-- Company info -->
+              <xs:element name="company-name" type="string1000"/>
+              <xs:element name="company-id" type="string1000"/>
+              <xs:element name="company-full-address" type="string1000"/>
+              <xs:element name="company-facebook-url" type="urlString" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="company-data-policy-url" type="urlStringOrEmpty" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="company-url" type="urlStringOrEmpty"/>
+              <xs:element name="company-page-matching-approach" minOccurs="0" maxOccurs="1">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:whiteSpace value="collapse"/>
+                    <xs:enumeration value="standard"/>
+                    <xs:enumeration value="none"/>
+                    <xs:enumeration value="STANDARD"/>
+                    <xs:enumeration value="NONE"/>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <!-- Location -->
+              <xs:element name="full-address" type="string1000" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="house-number" type="string1000" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="street-name" type="string1000" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="city" type="string1000" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="region" type="string1000" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="country" type="string1000"/>
+              <xs:element name="postal-code" type="string1000" minOccurs="0" maxOccurs="1"/>
+              <!-- Salary -->
+              <xs:element name="salary" type="positiveDecimal" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="salary-min" type="positiveDecimal" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="salary-max" type="positiveDecimal" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="salary-currency" minOccurs="0" maxOccurs="1">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="3"/>
+                    <xs:whiteSpace value="collapse"/>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="salary-type" minOccurs="0" maxOccurs="1">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:whiteSpace value="collapse"/>
+                    <xs:enumeration value="hourly"/>
+                    <xs:enumeration value="daily"/>
+                    <xs:enumeration value="weekly"/>
+                    <xs:enumeration value="biweekly"/>
+                    <xs:enumeration value="monthly"/>
+                    <xs:enumeration value="annually"/>
+                    <xs:enumeration value="one-time"/>
+                    <xs:enumeration value="HOURLY"/>
+                    <xs:enumeration value="DAILY"/>
+                    <xs:enumeration value="WEEKLY"/>
+                    <xs:enumeration value="BIWEEKLY"/>
+                    <xs:enumeration value="MONTHLY"/>
+                    <xs:enumeration value="ANNUALLY"/>
+                    <xs:enumeration value="ONE-TIME"/>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <!-- Integration configuration -->
+              <xs:element name="facebook-apply-data">
+                <xs:complexType>
+                  <xs:all>
+                    <xs:element name="application-callback-url" type="urlString" minOccurs="0" maxOccurs="1"/>
+                    <xs:element name="custom-questions-url" type="urlString" minOccurs="0" maxOccurs="1"/>
+                    <!-- Application form configuration -->
+                    <xs:element name="form-config" minOccurs="0" maxOccurs="1">
+                      <xs:complexType>
+                        <xs:all>
+                          <xs:element name="email-field" minOccurs="0" maxOccurs="1">
+                            <xs:complexType>
+                              <xs:all>
+                                <xs:element name="optional" type="boolean"/>
+                              </xs:all>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element name="phone-number-field" minOccurs="0" maxOccurs="1">
+                            <xs:complexType>
+                              <xs:all>
+                                <xs:element name="optional" type="boolean"/>
+                              </xs:all>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element name="work-experience-field" minOccurs="0" maxOccurs="1">
+                            <xs:complexType>
+                              <xs:all>
+                                <xs:element name="optional" type="boolean"/>
+                              </xs:all>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element name="education-experience-field" minOccurs="0" maxOccurs="1">
+                            <xs:complexType>
+                              <xs:all>
+                                <xs:element name="optional" type="boolean"/>
+                              </xs:all>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element name="resume-attachment-field" minOccurs="0" maxOccurs="1">
+                            <xs:complexType>
+                              <xs:all>
+                                <xs:element name="optional" type="boolean"/>
+                              </xs:all>
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:all>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="offsite-application-url" type="urlString" minOccurs="0" maxOccurs="1"/>
+                    <xs:element name="application-flow" minOccurs="0" maxOccurs="1">
+                      <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                          <xs:whiteSpace value="collapse"/>
+                          <xs:enumeration value="native"/>
+                          <xs:enumeration value="offsite"/>
+                          <xs:enumeration value="NATIVE"/>
+                          <xs:enumeration value="OFFSITE"/>
+                        </xs:restriction>
+                      </xs:simpleType>
+                    </xs:element>
+                    <!-- Development / Unused / Legacy -->
+                    <xs:element name="hide-from-newsfeed" type="boolean" minOccurs="0" maxOccurs="1"/>
+                    <xs:element name="hide-from-timeline" type="boolean" minOccurs="0" maxOccurs="1"/>
+                    <xs:element name="messenger-enabled" type="boolean" minOccurs="0" maxOccurs="1"/>
+                  </xs:all>
+                </xs:complexType>
+              </xs:element>
+              <!-- Development / Unused / Legacy -->
+              <xs:element name="company-admin-note" type="string1000" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="facebook-distribution-enabled" type="string1000" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="sponsored" type="string1000" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="campaign-id" type="string1000" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="bid" type="string1000" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="bid-type" type="string1000" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="pixel-id" type="string1000" minOccurs="0" maxOccurs="1"/>
+            </xs:all>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
