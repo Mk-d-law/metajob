@@ -24,7 +24,7 @@ class Job(models.Model):
     # Salary
     salary_min = models.DecimalField(max_digits=10, decimal_places=2)
     salary_max = models.DecimalField(max_digits=10, decimal_places=2)
-    salary_currency = models.CharField(max_length=3)
+    salary_currency = models.CharField(max_length=14)
     salary_type = models.CharField(max_length=50)
 
     # Integration configuration

@@ -57,6 +57,6 @@ def job_feed(request):
         f.write(xml)
 
     # Create an HTTP response with the XML content
-    response = HttpResponse(xml, content_type='application/xml')
+    response = HttpResponse(xml.encode('utf-8'), content_type='application/xml')
     response['Content-Disposition'] = 'attachment; filename="jobs.xml"'
     return response
