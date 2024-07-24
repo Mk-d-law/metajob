@@ -29,4 +29,4 @@ def validate_xml(xml_file, xsd_file):
 xml_url = "jobportal/media/jobs.xml"
 
 
-validate_xml("jobs.xml", "jobs_feed_validator.xsd")
+validate_xml("metajob.xml", "jobs_feed_validator.xsd")

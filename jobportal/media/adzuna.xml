@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<jobs>
+    <job>
+        <title><![CDATA[django intern]]></title>
+        <id><![CDATA[1]]></id>
+        <description><![CDATA[job integration]]></description>
+        <url><![CDATA[https://untappped/singlejob/1]]></url>
+        <location><![CDATA[Chennai]]></location>
+        <country><![CDATA[In]]></country>
+        <salary><![CDATA[2000]]></salary>
+        <company><![CDATA[grid]]></company>
+    </job>
+</jobs>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<source>
+
+<!-- Publisher and feed info -->
+<publisher-name>Your ATS</publisher-name>
+<publisher-url>http://www.yourdomain.com</publisher-url>
+<last-build-date>2020-11-06 18:47:08 +0000</last-build-date>
+
+<!-- Job tag. Repeat for each job opening. -->
+<job>
+
+<!-- Basic job info -->
+<title><![CDATA[Mechanical Engineer]]></title>
+<date><![CDATA[2020-11-06 18:47:08 +0000]]></date>
+<id><![CDATA[unique11111]]></id>
+
+<description><![CDATA[Mechanical Engineer
+
+  Help develop a perpetual motion machine. Great perks.
+  ]]></description>
+<job-type><![CDATA[FULL_TIME]]></job-type>
+
+<!-- Company info -->
+<company-name><![CDATA[Hiring Company, Ltd.]]></company-name>
+<company-id><![CDATA[xyz123]]></company-id>
+<company-full-address><![CDATA[1 Hacker Way, Menlo Park, CA, 94025]]></company-full-address>
+<company-facebook-url>
+    <![CDATA[https://www.facebook.com/hiringcompany]]>
+</company-facebook-url>
+
+<company-url><![CDATA[https://hiringcompany.com]]></company-url>
+
+
+<!-- Location -->
+
+<country><![CDATA[US]]></country>
+
+<!-- Salary -->
+<salary><![CDATA[10000]]></salary>
+<salary-currency><![CDATA[USD]]></salary-currency>
+<salary-type><![CDATA[ANNUALLY]]></salary-type>
+
+<!-- Integration configuration -->
+<facebook-apply-data>
+    <application-callback-url>
+    <![CDATA[https://yourdomain.com/callback]]>
+    </application-callback-url>
+    
+    
+</facebook-apply-data>
+
+</job>
+
+<!-- ...add more <job> tags for additional jobs -->
+
+</source>

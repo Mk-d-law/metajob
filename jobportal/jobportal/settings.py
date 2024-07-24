@@ -29,10 +29,11 @@ DEBUG = True
 ALLOWED_HOSTS = [
     'localhost',
     '127.0.0.1',
-    'f3f62a32-fb99-4b3e-a424-cb19212f43bc-00-1kngrcmwtnwdc.worf.replit.dev',
-    'f3f62a32-fb99-4b3e-a424-cb19212f43bc-00-1kngrcmwtnwdc.worf.replit.dev:8000',
+    '78cd1cd5-c1b3-4949-80be-85cb2d324c9a-00-37wxu0hux3gap.kirk.replit.dev',
+    '78cd1cd5-c1b3-4949-80be-85cb2d324c9a-00-37wxu0hux3gap.kirk.replit.dev:8000',
 ]
 
+CSRF_TRUSTED_ORIGINS = ['https://78cd1cd5-c1b3-4949-80be-85cb2d324c9a-00-37wxu0hux3gap.kirk.replit.dev:8000']
 
 # Application definition
 
